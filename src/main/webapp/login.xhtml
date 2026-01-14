@@ -26,7 +26,21 @@
                                 <f:validateLength minimum="5"/>
                             </p:inputText>
                             <p:message for="username" display="icon" showDetail="true"/>
+
+                            <p:outputLabel for="password" value="Contraseña:" />
+                            <p:password id="password" value="#{authenticationBean.password}" required="true" toggleMask="true" redisplay="true">
+                                <f:validateLength minimum="8" for="password"/>
+                                <p:clientValidator/>
+                            </p:password>
+                            <p:message for="password" display="icon" showDetail="true"/>
                         </h:panelGrid>
+                        <p:commandButton value="Ingresar" action="#{authenticationBean.login}"
+                                         icon="pi pi-user" validateClient="true" styleClass="mt-3"
+                                         update="@form" title="Accion de ingreso a almapp"/>
+                        <p:commandButton value="Cancelar" action="index.xhtml?faces-redirect=true"
+                                         immediate="true"
+                                         icon="pi pi-times" styleClass="mt-3 ui-button-secondary"/>
+
                     </p:panel>
                 </div>
             </h:form>
