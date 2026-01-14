@@ -33,7 +33,7 @@ public abstract class Organization implements java.io.Serializable{
     }
 
     public Organization(Long id,
-                        @NotNull @NotEmpty String name,
+                        String name,
                         @NotNull LocalDate creationDate,
                         @NotNull IdentificationType identificationType,
                         @NotNull @NotEmpty String identificationNumber,
@@ -58,7 +58,9 @@ public abstract class Organization implements java.io.Serializable{
         return name;
     }
 
-    public abstract void setName(@NotNull @NotEmpty String name);
+    protected void setName(@NotNull @NotEmpty String name){
+        this.name = name.trim();
+    }
 
     public LocalDate getCreationDate() {
         return creationDate;

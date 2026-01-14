@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Permission implements java.io.Serializable{
 
-        private Long id;
+    private Long id;
 
     /**
      * Representa un recurso URI. Ej.: "/admin/usuarios"

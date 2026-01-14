@@ -42,14 +42,23 @@ public class User implements Serializable {
      * @param password
      * @throws IllegalArgumentException
      */
-    public User(Long id, @NotNull @NotEmpty String name, @NotNull @NotEmpty String password) throws IllegalArgumentException{
+    public User(Long id,
+                @NotNull @NotEmpty String name,
+                @NotNull @NotEmpty String password) throws IllegalArgumentException{
         this();
         this.id = id;
-        validateNameRestriction(name);
+        //validateNameRestriction(name);
         this.setName(name);
         this.setPassword(password);
     }
 
+    public User(Long id,
+                @NotNull @NotEmpty String name,
+                @NotNull @NotEmpty String password,
+                @NotNull Organization organization) {
+        this(id, name, password);
+        this.organization = organization;
+    }
 
     /**
      * Validaciones a nivel de modelo y negocio
@@ -88,6 +97,22 @@ public class User implements Serializable {
 
     public void setPassword(@NotNull @NotEmpty String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     @Override

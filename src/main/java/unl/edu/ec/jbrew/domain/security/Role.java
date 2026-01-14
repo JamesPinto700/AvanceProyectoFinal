@@ -4,9 +4,13 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Role implements java.io.Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 
@@ -15,8 +19,10 @@ public class Role implements java.io.Serializable{
     @NotEmpty
     private String name;
 
-    public Role() {
+    private Set<Permission> permissions;
 
+    public Role() {
+        permissions = new HashSet<>();
     }
 
     public Role(Long id, @NotNull @NotEmpty String name) {
@@ -39,6 +45,14 @@ public class Role implements java.io.Serializable{
 
     public void setName(@NotNull @NotEmpty String name) {
         this.name = name.trim();
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override
