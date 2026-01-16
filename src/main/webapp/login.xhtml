@@ -15,28 +15,29 @@
                         <p:autoUpdate/>
                     </p:messages>
                     <!-- Contenido principal -->
-                    <p:panel id="panel" header="Inicio de Sesión" styleClass="mb-3">
+                    <p:panel id="panel" header="Inicio de Sesión">
                         <h:panelGrid columns="3" cellpadding="7">
-                            <p:outputLabel for="username" value="Usuario: *"/>
+                            <p:outputLabel for="username" value="Usuario: "/>
                             <p:inputText id="username"
-                                         value=""
+                                         value="#{authenticationController.username}"
                                          required="true"
                                          label="Usuario"
                                          placeholder="Nombre de usuario">
                                 <f:validateLength minimum="5"/>
                             </p:inputText>
-                            <p:message for="username" display="icon" showDetail="true"/>
+                            <p:message for="username" showDetail="true" showSummary="true"/>
 
                             <p:outputLabel for="password" value="Contraseña:" />
-                            <p:password id="password" value="#{authenticationBean.password}" required="true" toggleMask="true" redisplay="true">
+                            <p:password id="password" value="#{authenticationController.password}"
+                                        required="true" toggleMask="true" redisplay="true">
                                 <f:validateLength minimum="8" for="password"/>
                                 <p:clientValidator/>
                             </p:password>
-                            <p:message for="password" display="icon" showDetail="true"/>
+                            <p:message for="password" showDetail="true" showSummary="true"/>
                         </h:panelGrid>
-                        <p:commandButton value="Ingresar" action="#{authenticationBean.login}"
+                        <p:commandButton value="Ingresar" action="#{authenticationController.login}"
                                          icon="pi pi-user" validateClient="true" styleClass="mt-3"
-                                         update="@form" title="Accion de ingreso a almapp"/>
+                                         update="@form" title="Accion de ingreso a la app"/>
                         <p:commandButton value="Cancelar" action="index.xhtml?faces-redirect=true"
                                          immediate="true"
                                          icon="pi pi-times" styleClass="mt-3 ui-button-secondary"/>

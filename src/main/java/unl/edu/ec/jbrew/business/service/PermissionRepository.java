@@ -4,6 +4,7 @@ package unl.edu.ec.jbrew.business.service;
  * @author wduck (Wilman Chamba Z)
  */
 
+import jakarta.ejb.Stateless;
 import unl.edu.ec.jbrew.domain.security.ActionType;
 import unl.edu.ec.jbrew.domain.security.Permission;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Stateless
 public class PermissionRepository {
 
     private static final Map<Long, Permission> tablePermissionBD;

@@ -1,5 +1,7 @@
 package unl.edu.ec.jbrew.business;
 
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import unl.edu.ec.jbrew.business.service.RoleRepository;
 import unl.edu.ec.jbrew.business.service.UserRepository;
 import unl.edu.ec.jbrew.domain.security.Role;
@@ -15,11 +17,14 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Stateless
 public class SecurityFacade implements Serializable {
 
-    private UserRepository userRepository = new UserRepository();
+    @Inject
+    private UserRepository userRepository;
 
-    private RoleRepository roleRepository = new RoleRepository();
+    @Inject
+    private RoleRepository roleRepository;
 
     public User createUser(User user) throws EncryptorException, AlreadyEntityException {
         String pwdEncripted = EncryptorManager.encrypt(user.getPassword());

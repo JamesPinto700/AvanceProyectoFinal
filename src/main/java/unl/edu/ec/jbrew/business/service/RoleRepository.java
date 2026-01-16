@@ -1,5 +1,6 @@
 package unl.edu.ec.jbrew.business.service;
 
+import jakarta.ejb.Stateless;
 import unl.edu.ec.jbrew.domain.security.Role;
 
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.TreeMap;
 /**
  * @author wduck (Wilman Chamba Z)
  */
-
+@Stateless
 public class RoleRepository {
 
     private static final Map<String, Role> tableRoleBD;

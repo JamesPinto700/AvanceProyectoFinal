@@ -3,7 +3,7 @@ package unl.edu.ec.jbrew.exception;
 public class CredentialInvalidException extends Exception{
 
     public CredentialInvalidException() {
-        super("Invalid credentials");
+        super("Credenciales invalidas");
     }
 
     public CredentialInvalidException(String message) {

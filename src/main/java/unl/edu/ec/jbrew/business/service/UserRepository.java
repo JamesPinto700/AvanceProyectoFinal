@@ -1,10 +1,12 @@
 package unl.edu.ec.jbrew.business.service;
 
+import jakarta.ejb.Stateless;
 import unl.edu.ec.jbrew.domain.security.User;
 import unl.edu.ec.jbrew.exception.EntityNotFoundException;
 
 import java.util.*;
 
+@Stateless
 public class UserRepository {
     private static final Map<Long, User> tableUserBD;
     private static Long sequenceId;
