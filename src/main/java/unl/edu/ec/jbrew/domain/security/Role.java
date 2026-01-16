@@ -31,6 +31,14 @@ public class Role implements java.io.Serializable{
         this.setName(name);
     }
 
+    public void add(Permission permission){
+        if (permission != null) {
+            if (!getPermissions().contains(permission)){
+                this.permissions.add(permission);
+            }
+        }
+    }
+
     public Long getId() {
         return id;
     }
