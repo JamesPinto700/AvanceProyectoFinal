@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces">
+<ui:composition template="WEB-INF/template/base.xhtml">
+    <ui:define name="title-view">
+        🏪 Dashboard - Cafetería JBrews
+    </ui:define>
+    <ui:define name="content">
+        <style>
+            .dashboard-card {
+                height: 170px;
+                border-radius: 10px;
+                color: white;
+                padding: 20px;
+                margin: 10px;
+                cursor: pointer;
+                transition: transform 0.3s;
+            }
+            .dashboard-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+            .card-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            .card-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+            .card-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+            .card-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+            .card-icon {
+                font-size: 3em;
+                margin-bottom: 10px;
+            }
+
+            /* NUEVO: Contenedor grid para columnas */
+            .dashboard-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+
+            /* OPCIONAL: Para una cuadrícula fija de 2 columnas */
+            /* .dashboard-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                margin-bottom: 30px;
+            } */
+
+            /* Responsive para móviles */
+            @media (max-width: 768px) {
+                .dashboard-container {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+        <h:form>
+            <div class="card">
+                <p:messages showDetail="true" skipDetailIfEqualsSummary="true">
+                    <p:autoUpdate/>
+                </p:messages>
+                <!-- Contenido principal -->
+                <div style="padding: 20px;">
+                    <h1 style="color: #333; margin-bottom: 30px;">🏪 Dashboard - Cafetería JBrews</h1>
+
+                    <div class="dashboard-container">
+                        <div class="dashboard-card card-1" onclick="window.location.href='/productList.xhtml'">
+                            <div class="card-icon">📦</div>
+                            <h2>Productos</h2>
+                            <p>Gestión de menú</p>
+                        </div>
+                        <div class="dashboard-card card-2">
+                            <div class="card-icon">📋</div>
+                            <h2>Pedidos</h2>
+                            <p>Toma y gestión</p>
+                        </div>
+
+                        <div class="dashboard-card card-3">
+                            <div class="card-icon">🧾</div>
+                            <h2>Facturación</h2>
+                            <p>Cierre de caja</p>
+                        </div>
+
+                        <div class="dashboard-card card-4">
+                            <div class="card-icon">📊</div>
+                            <h2>Reportes</h2>
+                            <p>Estadísticas de ventas</p>
+                        </div>
+
+                    </div>
+                    <!-- Últimos productos -->
+                    <p:panel header="🆕 Últimos Productos Agregados" style="margin-top: 30px;">
+                        <p:dataTable var="product"
+                                     value="#{dashboardController.allProducts}"
+                                     paginator="true"
+                                     rows="5"
+                                     paginatorPosition="bottom">
+                            <p:column headerText="Producto">
+                                #{product.name}
+                            </p:column>
+                            <p:column headerText="Precio">
+                                <h:outputText value="#{product.price}">
+                                    <f:convertNumber type="currency" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Categoría">
+                                #{product.category.name}
+                            </p:column>
+                            <p:column headerText="Estado">
+                        <span class="status-badge #{product.active ? 'status-active' : 'status-inactive'}">
+                            #{product.active ? 'Activo' : 'Inactivo'}
+                        </span>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

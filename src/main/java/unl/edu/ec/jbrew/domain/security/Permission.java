@@ -27,7 +27,7 @@ public class Permission implements java.io.Serializable{
 
     public boolean matchWith(String requestResource, ActionType requestAction) {
         return this.resource.equals(requestResource) &&
-                this.action.equals(requestAction);
+                (this.action.equals(ActionType.ALL) || this.action.equals(requestAction));
     }
 
     public Long getId() {

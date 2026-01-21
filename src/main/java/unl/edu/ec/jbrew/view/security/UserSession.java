@@ -6,6 +6,7 @@ import jakarta.inject.Named;
 import jakarta.validation.constraints.NotNull;
 import unl.edu.ec.jbrew.business.SecurityFacade;
 import unl.edu.ec.jbrew.domain.security.ActionType;
+import unl.edu.ec.jbrew.domain.security.Permission;
 import unl.edu.ec.jbrew.domain.security.Role;
 import unl.edu.ec.jbrew.domain.security.User;
 import unl.edu.ec.jbrew.exception.EntityNotFoundException;
@@ -13,6 +14,7 @@ import unl.edu.ec.jbrew.exception.EntityNotFoundException;
 import java.io.Serial;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 @Named
 @SessionScoped
@@ -40,6 +42,9 @@ public class UserSession implements java.io.Serializable{
     }
 
     public boolean hasPermission(String resource, ActionType action) {
+        if (resource.equals("/dashboard.xhtml")){
+            return true;
+        }
         return user.getRoles().stream()
                 .flatMap(role -> role.getPermissions().stream())
                 .anyMatch(permission -> permission.matchWith(resource, action));
