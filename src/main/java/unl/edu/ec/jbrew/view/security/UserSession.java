@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.validation.constraints.NotNull;
 import unl.edu.ec.jbrew.business.SecurityFacade;
+import unl.edu.ec.jbrew.business.service.UserRepository;
 import unl.edu.ec.jbrew.domain.security.ActionType;
 import unl.edu.ec.jbrew.domain.security.Permission;
 import unl.edu.ec.jbrew.domain.security.Role;

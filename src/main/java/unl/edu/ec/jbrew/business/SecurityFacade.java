@@ -13,9 +13,7 @@ import unl.edu.ec.jbrew.exception.EntityNotFoundException;
 import unl.edu.ec.jbrew.util.EncryptorManager;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Stateless
 public class SecurityFacade implements Serializable {
@@ -36,6 +34,22 @@ public class SecurityFacade implements Serializable {
             return userPersisted;
         }
         throw new AlreadyEntityException("Usuario ya existe");
+    }
+
+    public User updateUser(User user) throws AlreadyEntityException, EncryptorException {
+        if (user.getId() == null){
+            return createUser(user);
+        }
+        String pwdEncrypted = EncryptorManager.encrypt(user.getPassword());
+        user.setPassword(pwdEncrypted);
+        try {
+            User userFound = userRepository.find(user.getName());
+            if  (!userFound.getId().equals(user.getId())){
+                throw new AlreadyEntityException("Ya existe otro usuario con ese nombre");
+            }
+        } catch (EntityNotFoundException ignored) {
+        }
+        return userRepository.save(user);
     }
 
     public User authenticate(String name, String password) throws CredentialInvalidException {
@@ -65,6 +79,16 @@ public class SecurityFacade implements Serializable {
         roles.add(role);
         return roles;
     }
+
+
+    public List<User> findUsers(String criteria) throws EntityNotFoundException {
+        return userRepository.findWithLike(criteria);
+    }
+
+    public User findUser(Long userId) throws EntityNotFoundException {
+        return  userRepository.find(userId);
+    }
+
 
 
 }

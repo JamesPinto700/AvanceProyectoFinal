@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import unl.edu.ec.jbrew.domain.common.Organization;
+import unl.edu.ec.jbrew.domain.common.Person;
 
 import java.io.Serializable;
 import java.util.HashSet;
