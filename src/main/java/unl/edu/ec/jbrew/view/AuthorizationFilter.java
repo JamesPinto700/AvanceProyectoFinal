@@ -1,5 +1,6 @@
 package unl.edu.ec.jbrew.view;
 
+import jakarta.faces.application.ResourceHandler;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -23,7 +24,8 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) servletRequest;
-        String requestPath = httpReq.getServletPath();
+        // Obtener la ruta solicitada
+        String requestPath = httpReq.getRequestURI().substring(httpReq.getContextPath().length());
 
         //logger.info("-----> Request path: " + requestPath);
         System.out.println("-----> Request path: " + requestPath);

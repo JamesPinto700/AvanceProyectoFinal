@@ -41,6 +41,7 @@ public class UserHomeController implements java.io.Serializable{
                 user = securityFacade.findUser(selectedUserId);
             } catch (EntityNotFoundException e) {
                 FacesUtil.addErrorMessage("No se pudo encontrar el usuario con id: " + selectedUserId);
+                user = new User();
             }
         } else {
             user = new User();

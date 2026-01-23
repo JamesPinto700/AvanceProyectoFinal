@@ -55,11 +55,11 @@
                             <p:inputText id="identificationNumber" value="#{userHome.user.organization.identificationNumber}" required="true"/>
 
                             <p:outputLabel for="birthDate" value="Fecha nacimiento:" />
-                            <p:datePicker id="birthDate" value="#{userHome.user.organization.creationDate}" required="true"
+                            <p:datePicker id="birthDate" value="#{userHome.user.organization.creationDate}"
+                                          required="true"
                                           title="Fecha de nacimiento" pattern="yyyy-MM-dd"
                                           showIcon="true" showOnFocus="false"
                                           yearNavigator="yes" monthNavigator="yes"/>
-
                             <p:outputLabel for="email" value="Email:" />
                             <p:inputText id="email" value="#{userHome.user.organization.email}"
                                          placeholder="ejemplo@correo.com"
