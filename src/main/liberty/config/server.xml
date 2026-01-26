@@ -2,10 +2,14 @@
     <featureManager>
         <feature>webProfile-10.0</feature>
     </featureManager>
+
     <basicRegistry id="defaultBasicRegistry" realm="BasicRealm">
         <user name="username" password="password" />
     </basicRegistry>
+
     <keyStore id="defaultKeyStore" password="password" />
+
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
+
     <webApplication location="jbrew-app.war" contextRoot="/"/>
 </server>
