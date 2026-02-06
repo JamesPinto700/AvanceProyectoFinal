@@ -1,32 +1,249 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:ui="jakarta.faces.facelets"
-      xmlns:p="primefaces">
-    <ui:composition template="WEB-INF/template/base.xhtml">
-        <ui:define name="title-view">
-            J-Brew 1.0 - Inicio
-        </ui:define>
-        <ui:define name="content">
-            <h:form>
-                <div class="card">
-                    <p:messages showDetail="true" skipDetailIfEqualsSummary="true">
-                        <p:autoUpdate/>
-                    </p:messages>
-                    <!-- Contenido principal -->
-                    <p:panel>
-                        <p:graphicImage title="logo" url="images/jbrew_logo.png"/>
-                        <h4>Bienvenido a la aplicación para la gestión de:</h4>
-                        <ul class="bullets">
-                            <li><h5>Gestionar usuarios</h5></li>
-                            <li><h5>Gestionar pedidos de la cefetría</h5></li>
-                            <li><h5>Gestionar productos</h5></li>
-                            <li><h5>Reporte de ventas</h5></li>
-                        </ul>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<!-- Verificar login al cargar la página -->
+<f:event type="preRenderView" listener="#{loginBean.checkLogin()}" />
+<f:view>
+    <h:head>
+        <title>SparkStudio - Simulador de Circuitos</title>
+        <h:outputStylesheet name="css/styles.css" />
+    </h:head>
+
+    <h:body style="display: flex; flex-direction: column; min-height: 100vh;">
+        <!-- TopBar -->
+        <ui:include src="/WEB-INF/templates/topbar.xhtml" />
+
+        <!-- Contenido Principal - UN SOLO FORMULARIO PRINCIPAL -->
+        <h:form id="mainForm">
+            <div class="main-content" style="flex: 1; display: flex; padding: 20px; gap: 20px;
+                                            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+
+                <!-- Panel Izquierdo: Componentes disponibles -->
+                <div class="left-panel" style="width: 300px; background: white; padding: 20px;
+                                              border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #3498db;
+                              padding-bottom: 10px;">
+                        <i class="pi pi-plus-circle"></i> Añadir Componentes
+                    </h3>
+
+                    <!-- Configuración de valores -->
+                    <p:panel header="Valores por Defecto" toggleable="true" collapsed="false">
+                        <p:panelGrid columns="2" styleClass="no-border">
+                            <p:outputLabel value="Voltaje (V):" for="voltaje" />
+                            <p:inputNumber id="voltaje" value="#{circuitoBean.voltaje}"
+                                           decimalPlaces="2" suffix=" V" />
+
+                            <p:outputLabel value="Corriente (A):" for="corriente" />
+                            <p:inputNumber id="corriente" value="#{circuitoBean.corriente}"
+                                           decimalPlaces="3" suffix=" A" />
+
+                            <p:outputLabel value="Resistencia (Ω):" for="resistencia" />
+                            <p:inputNumber id="resistencia" value="#{circuitoBean.resistencia}"
+                                           suffix=" Ω" />
+
+                            <p:outputLabel value="Capacitancia (F):" for="capacitancia" />
+                            <p:inputNumber id="capacitancia" value="#{circuitoBean.capacitancia}"
+                                           decimalPlaces="6" />
+
+                            <p:outputLabel value="Frecuencia (Hz):" for="frecuencia" />
+                            <p:inputNumber id="frecuencia" value="#{circuitoBean.frecuencia}"
+                                           decimalPlaces="0" suffix=" Hz" />
+                        </p:panelGrid>
                     </p:panel>
+
+                    <!-- Botones de componentes -->
+                    <div style="margin-top: 20px;">
+                        <h4 style="color: #2c3e50;">Selecciona un componente:</h4>
+
+                        <div class="component-buttons" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Botones SIN AJAX primero, solo acción -->
+                            <p:commandButton value="Fuente de Poder"
+                                             action="#{circuitoBean.agregarFuente()}"
+                                             styleClass="p-button-raised p-button-warning"
+                                             style="text-align: left;" />
+
+                            <p:commandButton value="Resistencia"
+                                             action="#{circuitoBean.agregarResistencia()}"
+                                             styleClass="p-button-raised"
+                                             style="text-align: left;" />
+
+                            <p:commandButton value="Capacitor"
+                                             action="#{circuitoBean.agregarCapacitor()}"
+                                             styleClass="p-button-raised p-button-info"
+                                             style="text-align: left;" />
+
+                            <p:commandButton value="Switch"
+                                             action="#{circuitoBean.agregarSwitch()}"
+                                             styleClass="p-button-raised p-button-success"
+                                             style="text-align: left;" />
+
+                            <p:commandButton value="Transistor"
+                                             action="#{circuitoBean.agregarTransistor()}"
+                                             styleClass="p-button-raised p-button-help"
+                                             style="text-align: left;" />
+                        </div>
+                    </div>
+
+                    <!-- Info del circuito -->
+                    <div style="margin-top: 20px; padding: 15px; background: #e8f4fd; border-radius: 5px;">
+                        <h5 style="margin: 0 0 10px 0; color: #2c3e50;">
+                            <i class="pi pi-info-circle"></i> Información del Circuito
+                        </h5>
+                        <p style="margin: 5px 0;">Total componentes:
+                            <strong>#{circuitoBean.circuito.lenght()}</strong>
+                        </p>
+                        <p:commandButton value="Limpiar Circuito"
+                                         icon="pi pi-trash"
+                                         action="#{circuitoBean.init()}"
+                                         styleClass="p-button-outlined p-button-danger p-button-sm" />
+                    </div>
                 </div>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+
+                <!-- Panel Central: Visualización del circuito -->
+                <div class="center-panel" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Panel de componentes añadidos -->
+                    <div style="background: white; padding: 20px; border-radius: 10px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h3 style="color: #2c3e50; margin-top: 0;">
+                            <i class="pi pi-sitemap"></i> Circuito Actual
+                        </h3>
+
+                        <!-- DataTable para mostrar componentes -->
+                        <p:dataTable value="#{circuitoBean.circuito.componentes}"
+                                     var="componente"
+                                     emptyMessage="No hay componentes en el circuito. ¡Agrega algunos!"
+                                     styleClass="p-datatable-striped p-datatable-sm"
+                                     rowStyleClass="#{componente['class'].simpleName}">
+
+                            <p:column headerText="Componente" style="width: 150px;">
+                                <h:outputText value="#{componente['class'].simpleName}"
+                                              style="font-weight: bold;"/>
+                            </p:column>
+
+                            <p:column headerText="Valores">
+                                <h:outputText value="#{componente}" escape="false" />
+                            </p:column>
+
+                            <p:column headerText="Acciones" style="width: 120px;">
+                                <p:commandButton icon="pi pi-pencil"
+                                                 action="#{circuitoBean.editarComponente(componente)}"
+                                                 styleClass="p-button-rounded p-button-danger p-button-sm" />
+                                <p:commandButton icon="pi pi-trash"
+                                                 action="#{circuitoBean.eliminarComponente(componente)}"
+                                                 styleClass="p-button-rounded p-button-danger p-button-sm" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+
+                    <!-- Representación visual -->
+                    <div style="background: white; padding: 20px; border-radius: 10px;
+                              box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h4 style="color: #2c3e50;">
+                            <i class="pi pi-eye"></i> Representación Visual
+                        </h4>
+
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;
+                                  min-height: 100px; padding: 20px; border: 2px dashed #ddd;
+                                  border-radius: 5px;">
+
+                            <ui:repeat value="#{circuitoBean.circuito.componentes}" var="comp">
+                                <div style="padding: 10px 15px; background: #e3f2fd; border-radius: 5px;
+                                          border: 1px solid #90caf9; display: flex; align-items: center;
+                                          gap: 10px;">
+
+                                    <!-- Icono basado en tipo de componente -->
+                                    <i class="pi #{comp['class'].simpleName == 'Fuente' ? 'pi-bolt' :
+                                                    comp['class'].simpleName == 'Resistencia' ? 'pi-minus-circle' :
+                                                    comp['class'].simpleName == 'Capacitor' ? 'pi-circle' :
+                                                    comp['class'].simpleName == 'Switch' ? 'pi-toggle-on' : 'pi-microchip'}"
+                                       style="color: #1976d2; font-size: 1.2rem;"></i>
+
+                                    <div>
+                                        <strong>#{comp['class'].simpleName}</strong>
+                                        <div style="font-size: 0.8rem; color: #666;">
+                                            <span>#{comp.voltaje != 0 ? 'V: ' += comp.voltaje += 'V' : ''}</span>
+                                            <span>#{comp.resistencia != 0 ? ' R: ' += comp.resistencia += 'Ω' : ''}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+
+                            <h:outputText value="Arrastra componentes aquí para crear conexiones"
+                                          rendered="#{circuitoBean.circuito.lenght() == 0}"
+                                          style="color: #999; font-style: italic; margin: auto;" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel Derecho: Propiedades y detalles -->
+                <div class="right-panel" style="width: 350px; background: white; padding: 20px;
+                                              border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #3498db;
+                              padding-bottom: 10px;">
+                        <i class="pi pi-cog"></i> Propiedades
+                    </h3>
+
+                    <div style="margin-bottom: 20px;">
+                        <h5>Componente seleccionado:</h5>
+                        <h:outputText value="#{circuitoBean.componenteSeleccionado != null ? circuitoBean.componenteSeleccionado['class'].simpleName : 'Ninguno'}"
+                                      style="font-weight: bold; color: #1976d2;" />
+                    </div>
+
+                    <!-- Ayuda rápida -->
+                    <div style="margin-top: 30px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                        <h5 style="color: #2c3e50; margin-top: 0;">
+                            <i class="pi pi-question-circle"></i> Instrucciones Rápidas
+                        </h5>
+                        <ol style="margin: 10px 0 0 0; padding-left: 20px; font-size: 0.9rem; color: #555;">
+                            <li>Configura valores por defecto en el panel izquierdo</li>
+                            <li>Haz clic en los botones de componentes para añadirlos</li>
+                            <li>Los componentes aparecerán en la lista central</li>
+                            <li>Usa el ícono de basura para eliminar componentes</li>
+                            <li>Usa "Nuevo Circuito" para reiniciar</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <!-- Footer - Fuerza un color visible -->
+        <div style="background: #2c3e50; padding: 1rem; border-top: 2px solid #3498db; margin-top: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Logo footer - ruta corregida -->
+                    <h:graphicImage library="images" name="SparkStudiologo.png"
+                                    style="height: 25px;"
+                                    alt="SparkStudio Footer Logo"/>
+
+                    <span style="color: #ecf0f1; font-size: 0.9rem;">
+                        © 2026 SparkStudio - Universidad Nacional de Loja
+                    </span>
+                </div>
+
+                <div style="color: #bdc3c7; font-size: 0.9rem;">
+                    <strong style="color: white;">#{circuitoBean.circuito.lenght()}</strong> componentes |
+                    <i class="pi pi-bolt" style="margin-left: 5px;"></i>
+                    Simulador v1.0
+                </div>
+            </div>
+        </div>
+
+        <!-- Diálogo de ayuda -->
+        <p:dialog header="Ayuda de SparkStudio" widgetVar="helpDialog" modal="true"
+                  resizable="false" style="width: 500px;">
+            <p>Esta aplicación simula circuitos electrónicos con los siguientes componentes:</p>
+            <ul>
+                <li><strong>Fuente:</strong> Provee voltaje al circuito</li>
+                <li><strong>Resistencia:</strong> Limita el flujo de corriente</li>
+                <li><strong>Capacitor:</strong> Almacena energía eléctrica</li>
+                <li><strong>Switch:</strong> Interruptor para abrir/cerrar circuito</li>
+                <li><strong>Transistor:</strong> Amplifica o conmuta señales</li>
+            </ul>
+            <p>Configura los valores y añade componentes para ver cómo interactúan.</p>
+        </p:dialog>
+    </h:body>
+</f:view>
 </html>
