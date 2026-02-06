@@ -22,7 +22,7 @@
             <!-- Configuración de EclipseLink values: none, drop-and-create-tables, create-tables, create-or-extend-tables -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
             <!-- database = ejecuta los comandos DDL directamente en la base de datos -->
-            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+            <!--<property name="eclipselink.ddl-generation.output-mode" value="database"/> -->
 
             <!-- 2. Cargar script de inicialización de la BD -->
             <property name="jakarta.persistence.sql-load-script-source"  value="META-INF/initial-data.sql"/>

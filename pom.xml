@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>unl.edu.ec.jbrew</groupId>
-    <artifactId>jbrew-app</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <groupId>edu.unl.cc.poo</groupId>
+    <artifactId>SparkStudio</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>Jbrew-app Coffe bar</name>
+    <name>SparkStudio Circuit Simulator</name>
     <description>
-        The project demonstrates how you can develop applications with the
-        Jakarta EE platform using widely adopted architectural best
-        practices like Domain-Driven Design (DDD).
-        Aplicacion Web para el servicio de cafeterías
+        Aplicación web para simular circuitos eléctricos con componentes electrónicos.
     </description>
 
     <properties>
@@ -25,17 +23,6 @@
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <war-plugin.version>3.4.0</war-plugin.version>
         <liberty-plugin.version>3.10.3</liberty-plugin.version>
-
-        <!--START DATASOURCE CONFIG!-->
-        <!-- VARIABLES CON VALORES POR DEFECTO PARA DESPLIEGUE LOCAL-->
-        <driver.jdbc.dir>${server.config.dir}/lib/global</driver.jdbc.dir>
-        <db.server.name>localhost</db.server.name>
-        <db.port.number>5434</db.port.number>
-
-        <!--CONFIG PARA COPIAR VALORES EN EL server.xml DESDE DESDE LAS VARIABLES DEFINIDAS ANTERIORMENTE-->
-        <liberty.bootstrap.driver.jdbc.dir>${driver.jdbc.dir}</liberty.bootstrap.driver.jdbc.dir>
-        <liberty.bootstrap.db.server.name>${db.server.name}</liberty.bootstrap.db.server.name>
-        <liberty.bootstrap.db.port.number>${db.port.number}</liberty.bootstrap.db.port.number>
     </properties>
 
     <dependencies>
@@ -53,34 +40,16 @@
             <classifier>jakarta</classifier>
         </dependency>
 
+        <!-- Tema opcional (puedes cambiarlo) -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces-themes</artifactId>
             <version>15.0.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.9</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.googlecode.owasp-java-html-sanitizer/owasp-java-html-sanitizer -->
-        <dependency>
-            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
-            <artifactId>owasp-java-html-sanitizer</artifactId>
-            <version>20260102.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>6.1.0-M1</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
-        <finalName>jbrew-app</finalName>
+        <finalName>SparkStudio</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -93,51 +62,10 @@
                 <version>${war-plugin.version}</version>
             </plugin>
 
-            <!-- CONFIG PLUGIN PARA COPIAR DEPENDENCIAS DEL PROYECTO PARA EL DESPLIEGUE -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>org.postgresql</groupId>
-                            <artifactId>postgresql</artifactId>
-                            <!--<version>la-version</version>-->
-                            <type>jar</type>
-                            <overWrite>true</overWrite>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <!--<destFileName>nombre-del-archivo.jar</destFileName>-->
-                        </artifactItem>
-                    </artifactItems>
-                </configuration>
-            </plugin>
-
-            <!-- Execute 'mvn clean package liberty:run' to run the application.  -->
             <plugin>
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>${liberty-plugin.version}</version>
-                <configuration>
-                    <copyDependencies>
-                        <dependencyGroup>
-                            <location>lib/global</location>
-                            <dependency>
-                                <groupId>org.postgresql</groupId>
-                                <artifactId>postgresql</artifactId>
-                            </dependency>
-                        </dependencyGroup>
-                    </copyDependencies>
-                </configuration>
             </plugin>
         </plugins>
     </build>

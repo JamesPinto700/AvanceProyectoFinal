@@ -1,9 +1,10 @@
 <web-app version="6.0"
          xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
 
-    <!-- Overring system levels default configuration usage of XML-->
+    <!-- Configuraciones PrimeFaces -->
     <context-param>
         <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
         <param-value>true</param-value>
@@ -14,7 +15,7 @@
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>saga-blue</param-value>
+        <param-value>saga</param-value>
     </context-param>
 
     <context-param>
@@ -22,47 +23,36 @@
         <param-value>true</param-value>
     </context-param>
 
-    <!--
+    <!-- Para desarrollo -->
     <context-param>
         <param-name>jakarta.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-    -->
-
-    <!-- Deshabilitar la implementación de JSF de Liberty -->
-    <!--
-    <context-param>
-        <param-name>jakarta.faces.DISABLE_FACESSERVLET_TO_XHTML</param-name>
-        <param-value>true</param-value>
-    </context-param>
-    -->
 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-    <!--
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/jakarta.faces.resource/*</url-pattern>
-        <url-pattern>/javax.faces.resource/*</url-pattern>
-    </servlet-mapping>
-    -->
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Login Page</web-resource-name>
-            <url-pattern>/login.xhtml</url-pattern>
-        </web-resource-collection>
-    </security-constraint>
 
     <welcome-file-list>
+        <welcome-file>login.xhtml</welcome-file>
         <welcome-file>index.xhtml</welcome-file>
-        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
+    <!-- Configuración de manejo de errores -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/login.xhtml</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/login.xhtml</location>
+    </error-page>
 </web-app>

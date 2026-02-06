@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Autor Matias
+ */
 @Named
 @SessionScoped
 public class CircuitoBean implements Serializable {

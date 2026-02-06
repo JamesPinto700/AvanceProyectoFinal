@@ -6,7 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="jbrew-app" />
+        <module name="SparkStudio" />
+        <module name="SparkStudio-App" />
       </profile>
     </annotationProcessing>
   </component>
