@@ -62,26 +62,31 @@
                             <!-- Botones SIN AJAX primero, solo acción -->
                             <p:commandButton value="Fuente de Poder"
                                              action="#{circuitoBean.agregarFuente()}"
+                                             update="@form"
                                              styleClass="p-button-raised p-button-warning"
                                              style="text-align: left;" />
 
                             <p:commandButton value="Resistencia"
                                              action="#{circuitoBean.agregarResistencia()}"
+                                             update="@form"
                                              styleClass="p-button-raised"
                                              style="text-align: left;" />
 
                             <p:commandButton value="Capacitor"
                                              action="#{circuitoBean.agregarCapacitor()}"
+                                             update="@form"
                                              styleClass="p-button-raised p-button-info"
                                              style="text-align: left;" />
 
                             <p:commandButton value="Switch"
                                              action="#{circuitoBean.agregarSwitch()}"
+                                             update="@form"
                                              styleClass="p-button-raised p-button-success"
                                              style="text-align: left;" />
 
                             <p:commandButton value="Transistor"
                                              action="#{circuitoBean.agregarTransistor()}"
+                                             update="@form"
                                              styleClass="p-button-raised p-button-help"
                                              style="text-align: left;" />
                         </div>
@@ -98,6 +103,7 @@
                         <p:commandButton value="Limpiar Circuito"
                                          icon="pi pi-trash"
                                          action="#{circuitoBean.init()}"
+                                         update="@form"
                                          styleClass="p-button-outlined p-button-danger p-button-sm" />
                     </div>
                 </div>
@@ -130,9 +136,11 @@
                             <p:column headerText="Acciones" style="width: 120px;">
                                 <p:commandButton icon="pi pi-pencil"
                                                  action="#{circuitoBean.editarComponente(componente)}"
+                                                 update="@form"
                                                  styleClass="p-button-rounded p-button-danger p-button-sm" />
                                 <p:commandButton icon="pi pi-trash"
                                                  action="#{circuitoBean.eliminarComponente(componente)}"
+                                                 update="@form"
                                                  styleClass="p-button-rounded p-button-danger p-button-sm" />
                             </p:column>
                         </p:dataTable>
