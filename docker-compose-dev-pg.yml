@@ -1,0 +1,65 @@
+services:
+  spark-studio-pg-db:
+    image: postgres:${POSTGRES_VERSION}
+    restart: unless-stopped
+    container_name: spark-studio-pg-db-container
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PGSQL_PORT_PUBLIC}:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      spark-studio-pg-network:
+        ipv4_address: 173.21.0.251
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  spark-studio-pg-adminer-db:
+    image: adminer
+    container_name: spark-studio-pg-adminer-db-container
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    depends_on:
+      - spark-studio-pg-db
+    networks:
+      spark-studio-pg-network:
+        ipv4_address: 173.21.0.253
+
+  spark-studio-pg-admin4-db:
+    container_name: spark-studio-pgadmin4-container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "adminDB@postgres.org"
+      PGADMIN_DEFAULT_PASSWORD: "admin123"
+    ports:
+      - 16543:80
+    depends_on:
+      - spark-studio-pg-db
+    networks:
+      spark-studio-pg-network: # Cambiado de jbrew-pg-network
+        ipv4_address: 173.21.0.254
+
+networks:
+  spark-studio-pg-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 173.21.0.0/24
+
+volumes:
+  pg-data:
+    name: spark-studio-pg-data-local
+    driver: local
+    driver_opts:
+      type: none
+      device: ${LOCAL_DATA_DIR_BD}
+      o: bind
