@@ -3,8 +3,8 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.0">
-    <persistence-unit name="jbrewPU" transaction-type="JTA">
-        <jta-data-source>jdbc/jbrewDS</jta-data-source>
+    <persistence-unit name="sparkStudioPU" transaction-type="JTA">
+        <jta-data-source>jdbc/sparkStudioDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <!-- CONFIGURACION DE CONEXION A LA BD -->
@@ -19,8 +19,10 @@
             <!-- 1. Configuración de generación / actualización de tablas (esquema de BD) -->
             <!-- Configuración de Jakarta persistence puede ser: none, create, drop-and-create, drop -->
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+
             <!-- Configuración de EclipseLink values: none, drop-and-create-tables, create-tables, create-or-extend-tables -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+
             <!-- database = ejecuta los comandos DDL directamente en la base de datos -->
             <!--<property name="eclipselink.ddl-generation.output-mode" value="database"/> -->
 

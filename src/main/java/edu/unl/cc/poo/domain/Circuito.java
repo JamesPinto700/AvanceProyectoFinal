@@ -2,6 +2,8 @@ package edu.unl.cc.poo.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+
 /**
  * @Autor Grupo3
  */

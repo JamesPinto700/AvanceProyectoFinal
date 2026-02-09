@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <div class="footer" style="background-color: #2c3e50; padding: 1rem;
+                               border-top: 2px solid #3498db; margin-top: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- LOGO DEL FOOTER (rectangular, altura 25px) -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <!--
+                    RUTA DE LA IMAGEN:
+                    Coloca tu footer-logo.png en: src/main/webapp/resources/images/footer-logo.png
+                    Tamaño recomendado: ancho flexible × 25px alto
+                -->
+                <h:graphicImage name="images/SparkStudiologo.png"
+                                style="height: 25px;"
+                                alt="SparkStudio Footer Logo"/>
+
+                <span style="color: #0c8fe7; font-size: 0.9rem;">
+                    © 2026 SparkStudio - Universidad Nacional de Loja
+                </span>
+            </div>
+
+            <div style="color: #0c8fe7; font-size: 0.9rem;">
+                <p:outputLabel value="Componentes en circuito: " />
+                <strong style="color: #ec0000;">#{circuitoBean.circuito.lenght()}</strong>
+                |
+                <i class="pi pi-bolt" style="margin-left: 5px;"></i>
+                Simulador de Circuitos v1.0
+            </div>
+        </div>
+    </div>
+
+</ui:composition>
+</html>

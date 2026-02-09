@@ -1,7 +1,6 @@
 package edu.unl.cc.poo.exception;
 
-public class CredentialInvalidException extends Exception{
-
+public class CredentialInvalidException extends RuntimeException {
     public CredentialInvalidException() {
         super("Credenciales invalidas");
     }

@@ -1,0 +1,54 @@
+package unl.edu.cc.sparkstudio.bussines.service.security;
+
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
+import unl.edu.cc.sparkstudio.bussines.service.CrudGenericService;
+import unl.edu.cc.sparkstudio.domain.security.User;
+import unl.edu.cc.sparkstudio.exception.EntityNotFoundException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author MacGyver2.0
+ */
+@Stateless
+public class UserRepository {
+
+    @Inject
+    private CrudGenericService crudService;
+
+    public User save(User user){
+        if (user.getId() == null){
+            return crudService.create(user);
+        } else {
+            return crudService.update(user);
+        }
+    }
+
+    public User find(@NotNull Long id) throws EntityNotFoundException {
+        User user = crudService.find(User.class, id);
+        if (user == null){
+            throw new EntityNotFoundException("User no encontrado con [" + id + "]");
+        }
+        return user;
+    }
+
+    public User find(@NotNull String name) throws EntityNotFoundException{
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name.toLowerCase());
+        User userFound = crudService.findSingleResultOrNullWithNamedQuery("User.findLikeName", params);
+        if (userFound == null){
+            throw new EntityNotFoundException("User no encontrado con [" + name + "]");
+        }
+        return userFound;
+    }
+
+    public List<User> findWithLike(@NotNull String name) throws EntityNotFoundException{
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name.toLowerCase() + "%");
+        return crudService.findWithNamedQuery("User.findLikeName", params);
+    }
+}

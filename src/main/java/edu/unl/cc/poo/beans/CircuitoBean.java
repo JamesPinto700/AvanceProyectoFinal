@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Autor Matias
+ * Autor James Rex
  */
 @Named
 @SessionScoped
